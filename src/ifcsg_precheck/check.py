@@ -1,8 +1,8 @@
 """Pre-submission checks for IFC-SG models (CORENET X).
 
 Two layers:
-1. Model checks that every submission needs, whatever the agency: schema, project units, a single site / building
-   and named storeys in ascending elevation, elements placed in a storey, map georeferencing, no duplicate GlobalIds.
+1. This project's building-submission profile: schema, project units, site / building and named storeys,
+   elements placed in a storey, map georeferencing, no duplicate GlobalIds. These are not universal IFC constraints.
 2. Property rules from rules/*.json. Each rule says: for elements of an IFC class (optionally a predefined type), a
    property set must carry a property, optionally of a data type and within allowed values. The rules are transcribed
    from BCA's public IFC-SG Industry Mapping and cite the row they came from.
@@ -10,6 +10,7 @@ Two layers:
 Every finding carries the element's GlobalId, class and name so it can be found in the authoring tool.
 """
 import json
+import math
 from collections import Counter
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -30,6 +31,11 @@ class Finding:
     ifc_class: str = ""
     name: str = ""
     agency: str = ""
+    origin: str | None = None  # model | mapping; None supports older manually constructed findings.
+
+    def __post_init__(self):
+        if self.origin is None:
+            self.origin = "mapping" if self.rule.startswith("CX") else "model"
 
 
 @dataclass
@@ -55,9 +61,9 @@ class Report:
         return {"summary": self.summary(), "findings": [asdict(f) for f in self.findings]}
 
 
-def _f(el, rule, severity, message, agency=""):
+def _f(el, rule, severity, message, agency="", origin="model"):
     return Finding(rule, severity, message, getattr(el, "GlobalId", "") or "", el.is_a() if el else "",
-                   (getattr(el, "Name", "") or "") if el else "", agency)
+                   (getattr(el, "Name", "") or "") if el else "", agency, origin)
 
 
 def _of_type(m, cls):
@@ -110,7 +116,7 @@ def model_checks(m):
     for el in m.by_type("IfcElement"):
         if el.is_a("IfcFeatureElement") or el.is_a("IfcOpeningElement"):
             continue
-        if uel.get_container(el) is None and uel.get_aggregate(el) is None:
+        if uel.get_container(el, ifc_class="IfcBuildingStorey") is None:
             out.append(_f(el, "containment", "error", "element is not contained in a storey (or aggregated into one)"))
     return out
 
@@ -130,19 +136,26 @@ def applies(rule, el):
     want = rule.get("predefined_type")
     if not want:
         return True
+    # Type-level PredefinedType takes precedence; an undefined type leaves the occurrence in charge.
+    source = uel.get_type(el)
+    if source is None or getattr(source, "PredefinedType", None) in (None, "NOTDEFINED"):
+        source = el
+    predefined = getattr(source, "PredefinedType", None)
     if rule.get("userdefined"):
-        # "*ACCESSIBLEROUTE" in the mapping: PredefinedType USERDEFINED with ObjectType ACCESSIBLEROUTE
-        return (getattr(el, "PredefinedType", None) == "USERDEFINED"
-                and (getattr(el, "ObjectType", "") or "").upper() == want.upper())
-    return (uel.get_predefined_type(el) or "").upper() == want.upper()
+        # Keep the USERDEFINED marker: a custom label "DOOR" is not the DOOR enum.
+        label = getattr(source, "ElementType" if source.is_a("IfcTypeObject") else "ObjectType", None)
+        return predefined == "USERDEFINED" and (label or "").upper() == want.upper()
+    return (predefined or "").upper() == want.upper()
 
 
 def value_problem(rule, value):
     if value is None or (isinstance(value, str) and not value.strip()):
         return "is empty"
     kind = rule.get("value_type")
-    if kind == "number" and not isinstance(value, (int, float)):
+    if kind == "number" and (isinstance(value, bool) or not isinstance(value, (int, float))):
         return f"should be a number, found {type(value).__name__}"
+    if kind == "number" and isinstance(value, float) and not math.isfinite(value):
+        return "should be a finite number"
     if kind == "boolean" and not isinstance(value, bool):
         return f"should be true/false, found {type(value).__name__}"
     if kind == "text" and not isinstance(value, str):
@@ -169,16 +182,17 @@ def property_checks(m, rules, report):
             pset = psets.get(rule["pset"])
             if pset is None:
                 out.append(_f(el, rule["id"], rule.get("severity", "error"),
-                              f"missing property set {rule['pset']} (needs {rule['property']})", rule.get("agency", "")))
+                              f"missing property set {rule['pset']} (needs {rule['property']})", rule.get("agency", ""),
+                              origin="mapping"))
                 continue
             if rule["property"] not in pset:
                 out.append(_f(el, rule["id"], rule.get("severity", "error"),
-                              f"{rule['pset']} has no {rule['property']}", rule.get("agency", "")))
+                              f"{rule['pset']} has no {rule['property']}", rule.get("agency", ""), origin="mapping"))
                 continue
             problem = value_problem(rule, pset[rule["property"]])
             if problem:
                 out.append(_f(el, rule["id"], rule.get("severity", "error"),
-                              f"{rule['pset']}.{rule['property']} {problem}", rule.get("agency", "")))
+                              f"{rule['pset']}.{rule['property']} {problem}", rule.get("agency", ""), origin="mapping"))
                 continue
             report.passed_pairs += 1
     return out

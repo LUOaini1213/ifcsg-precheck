@@ -6,11 +6,12 @@ Only values with a traceable source are written; everything else stays for the d
       slab Thickness = smallest extent; beam Depth = extent square to the member axis nearest vertical, Width =
       the other short extent;
       column Width/Breadth = the two short extents; pile Length = longest extent; railing Height = upright extent square to its axis
-  - Mark from the element's Tag, else its Name
+  - Mark from the element's first non-blank Tag or Name, preserving the original value
   - MaterialGrade from Pset_ConcreteElementGeneral.StrengthClass, written as the EN 206 cylinder/cube pair ("C50" -> "C50/60")
   - ConstructionMethod from Pset_ConcreteElementGeneral.CastingMethod (INSITU -> CIS, PRECAST -> PC)
   - LoadBearing from the element's Pset_<Class>Common.LoadBearing
-Existing values are never overwritten. The log (CSV) lists element, property, value and source for review.
+Existing non-empty values are preserved. Derived values are written only to the individual occurrence, never to a
+type or a property set shared with another object. The CSV lists element, property, value and source for review.
 """
 import csv
 from pathlib import Path
@@ -62,11 +63,15 @@ def derived(el, settings):
     out = {}
     psets = uel.get_psets(el)
     cls = el.is_a()
-    mark = el.Tag or el.Name
+    mark, mark_source = None, None
+    for candidate, source in ((el.Tag, "Tag"), (el.Name, "Name")):
+        if isinstance(candidate, str) and candidate.strip():
+            mark, mark_source = candidate, source
+            break
     dim_pset = {"IfcSlab": "SGPset_SlabDimension", "IfcBeam": "SGPset_BeamDimension", "IfcColumn": "SGPset_ColumnDimension",
                 "IfcPile": "SGPset_PileDimension", "IfcRailing": "SGPset_RailingDimension"}.get(cls)
     if dim_pset and mark and cls != "IfcRailing":
-        out[(dim_pset, "Mark")] = (mark, "Tag" if el.Tag else "Name")
+        out[(dim_pset, "Mark")] = (mark, mark_source)
     if dim_pset:
         e = extents_mm(settings, el)
         if e:
@@ -93,8 +98,9 @@ def derived(el, settings):
     if method and own:
         out[(own, "ConstructionMethod")] = (method, "Pset_ConcreteElementGeneral.CastingMethod")
     common = psets.get(f"Pset_{cls[3:]}Common", {})
-    if "LoadBearing" in common and own == "SGPset_Slab":
-        out[(own, "LoadBearing")] = (bool(common["LoadBearing"]), f"Pset_{cls[3:]}Common.LoadBearing")
+    load_bearing = common.get("LoadBearing")
+    if isinstance(load_bearing, bool) and own == "SGPset_Slab":
+        out[(own, "LoadBearing")] = (load_bearing, f"Pset_{cls[3:]}Common.LoadBearing")
     return out
 
 
@@ -109,14 +115,19 @@ def enrich(src, dst, log_path, wanted=None):
         for (pset, prop), (value, source) in derived(el, settings).items():
             if wanted is not None and (el.is_a(), pset, prop) not in wanted:
                 continue
-            if prop in existing.get(pset, {}) and existing[pset][prop] not in (None, ""):
+            current = existing.get(pset, {}).get(prop)
+            if current is not None and (not isinstance(current, str) or current.strip()):
                 continue
             todo.setdefault(pset, {})[prop] = value
             rows.append({"guid": el.GlobalId, "class": el.is_a(), "name": el.Name or "", "pset": pset, "property": prop,
                          "value": value, "source": source})
+        # The merged values above determine what is missing, but inherited IDs are never write targets.
+        owned = uel.get_psets(el, should_inherit=False)
         for pset, props in todo.items():
-            pid = existing.get(pset, {}).get("id")
+            pid = owned.get(pset, {}).get("id")
             p = m.by_id(pid) if pid else api.run("pset.add_pset", m, product=el, name=pset)
+            if uel.get_elements_by_pset(p) != {el}:
+                p = api.run("pset.unshare_pset", m, products=[el], pset=p)[0]
             api.run("pset.edit_pset", m, pset=p, properties=props)
     m.write(str(dst))
     with open(log_path, "w", newline="", encoding="utf-8") as f:

@@ -10,4 +10,6 @@ jobs:
           python-version: "3.11"
       - run: pip install -r requirements-ci.txt
       - run: python -m pytest -q tests
+      - name: Verify mutation error handling and source restoration
+        run: python tests/mutate.py --self-test
       - run: python tests/mutate.py
