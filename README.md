@@ -1,5 +1,7 @@
 # ifcsg-precheck
 
+[Open the live authored IFC review demo](https://luoaini1213.github.io/ifcsg-precheck/) · [2026-10-12 release receipt](docs/REPORT_REVIEW.md#2026-10-12-release)
+
 This tool checks an IFC model against Singapore's IFC+SG requirements for CORENET X **before** submission. It fills in the properties that can be derived from data already in the model, and writes a report of what is still missing, grouped by agency and element.
 
 The rules are generated from BCA's IFC+SG Industry Mapping (4 Dec 2025, 833 rows), which yields 1,456 rules; a rule is one combination of entity, sub type, property set, property and agency.
