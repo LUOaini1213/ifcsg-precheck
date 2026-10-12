@@ -1,0 +1,47 @@
+name: report-pages
+on:
+  push:
+    branches: [main, codex/report-review-demo-20261012]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the already reviewed authored demo from main
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: report-pages-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: pip install -r requirements-ci.txt numpy==2.4.6
+      - run: node --test tests/test_report_review.cjs
+      - run: python scripts/build_report_pages.py --output _site
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main' && vars.IFCSG_PAGES_ENABLED == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - uses: actions/deploy-pages@v4
+        id: deployment

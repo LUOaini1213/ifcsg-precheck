@@ -1,0 +1,22 @@
+[
+  {
+    "decision": "Authored reference supplied; not an official approval or a human annotation",
+    "guid": "0IotBT2fjNF97yb0Be3eao",
+    "property": "Demo_Review.ReviewReference"
+  },
+  {
+    "decision": "Authored reference supplied; not an official approval or a human annotation",
+    "guid": "1gNND8DMLRnhwOonVDr7z8",
+    "property": "Demo_Review.ReviewReference"
+  },
+  {
+    "decision": "Authored reference supplied; not an official approval or a human annotation",
+    "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+    "property": "Demo_Review.ReviewReference"
+  },
+  {
+    "decision": "Authored source confirms 0.25 m / 0.8 m / false; explicit typed values replace uncertain input",
+    "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+    "property": "Thickness / Clearance / LoadBearing"
+  }
+]

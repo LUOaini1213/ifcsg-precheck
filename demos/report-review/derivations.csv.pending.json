@@ -1,0 +1,9 @@
+[
+  {
+    "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+    "property": "Thickness",
+    "pset": "SGPset_SlabDimension",
+    "reason": "context-dependent or unsupported IFC unit",
+    "status": "unverified"
+  }
+]

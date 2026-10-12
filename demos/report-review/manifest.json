@@ -1,0 +1,158 @@
+{
+  "deferred": 1,
+  "derivations": 9,
+  "environment": {
+    "ifcopenshell": "0.8.5",
+    "numpy": "2.4.6",
+    "python": "3.11"
+  },
+  "independent_reopen": {
+    "authored_review_typed_values_verified": true,
+    "method": "Fresh ifcopenshell.open of all three STEP outputs; property-local units and geometry read independently",
+    "preserved_explicit_mm_override": true,
+    "unresolved_sources_preserved_before_authored_review": true,
+    "verified_geometry_writes": [
+      {
+        "explicit_unit": "METRE",
+        "exported_value": 0.25,
+        "guid": "1gNND8DMLRnhwOonVDr7z8",
+        "independent_geometry_si_m": 0.25,
+        "measure_type": "IfcLengthMeasure",
+        "physical_si_m": 0.25,
+        "property": "SGPset_SlabDimension.Thickness"
+      }
+    ]
+  },
+  "input_sha256": {
+    "authored_rules.json": "c9cd201208f29636709aaf1d84bb708462e2bc66efdeb20bb3126fffb18db717",
+    "before.ifc": "85f915a521548871a093a26fa9f20b415f698bcbbf6a256c58901ba470d292ce"
+  },
+  "output_sha256": {
+    "authored_rules.json": "c9cd201208f29636709aaf1d84bb708462e2bc66efdeb20bb3126fffb18db717",
+    "before.html": "307364668abd6dc95302a2dce9b3503dfc81c9e2a3b67e211ddc4e100fd7fbda",
+    "before.ifc": "85f915a521548871a093a26fa9f20b415f698bcbbf6a256c58901ba470d292ce",
+    "before.json": "f9c24aa13825baa468cd5dc1c224109d59a58ebb08ec40cb29a63dc546a00c47",
+    "decisions.json": "d6455adf3e7c1d04c3b2201acf024eafb68c8f86c0539221554944f617ab89e8",
+    "derivations.csv": "9dfb6aaf4973c2fddb699f4dc75354a783694f6f671c5be548337723e3a1d42a",
+    "derivations.csv.pending.json": "499035ef7ef656cc5bf183b5a638b741944df379f4cdb2f1226be305aa18c13a",
+    "derived.ifc": "d0d244301630b2f2a0abf3019d1f9f1804bed98a44cc33750b59eba7dbfbfa0e",
+    "derived.json": "197b3c4270ed714d7b8c7ddfc9fde9935df41327c70b6b20a4a5f9e5b649e060",
+    "independent_reopen.json": "38d36c2f650e63fd4265ac9dec50a9c7dc191bb85574513a1f8eb748112bfc49",
+    "index.html": "4e29b2c52f12fa133d6ef6a6bf328aae10e58b2e8b7836e5d2b4ab9a0c672290",
+    "reviewed.html": "f3dc7b3f479acd8e544b567f11f7d4af7a61a87f27e0afdc5f683b10a8f4e722",
+    "reviewed.ifc": "6925658e69432ef751621b0ee4d1f44e69f92dc7c0370315a5dbcb7451c40d60",
+    "reviewed.json": "450f333b30a60265f4dcf5d96468ddc79d32f63d04823a64ad94072b873050cb"
+  },
+  "profile": "Self-authored illustrative rules; no official mapping data",
+  "source_hash_policy": "UTF-8 source CRLF normalized to LF; IFC and outputs raw bytes",
+  "source_sha256": {
+    "scripts/report_demo.py": "675d52abdece59b25d540d6dcbed76871fd223c727d560947f13ae8edc278908",
+    "scripts/verify_report_demo.py": "d759ae721185daa0eead704971e3a34794930d2cd865b1877c11ff8615eaa24b",
+    "src/ifcsg_precheck/__init__.py": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+    "src/ifcsg_precheck/check.py": "c05442f6d72e8bcd1c4e5fde3c627936bf12a2cb69d2cd3aff5bca10a3c1964e",
+    "src/ifcsg_precheck/cli.py": "9420f1be9c7b1fd02574590f1d966d5c4eea9f1886504b99b2ff9b2d3472c76e",
+    "src/ifcsg_precheck/enrich.py": "a90351b9f4011df7aae668d4d07376df2fea304556a471d202fb12800fc3a509",
+    "src/ifcsg_precheck/mapping.py": "49ac3a2f02e16bb42f60e32585fd1ed4ed9bd282491f51d273ae55fde13ceae6",
+    "src/ifcsg_precheck/report.py": "4cdb4ad4b71bb91d0a28ebd531fcb60acfd865b5bf082df07364fce19748e3dd",
+    "src/ifcsg_precheck/report_assets/review.css": "aaa513d2a3a261b51b9a54088848d3982baad5ebe99dcca272fa1254c74a7849",
+    "src/ifcsg_precheck/report_assets/review.js": "3b1814dc0d67e565063a020dc10673f5df3d5f1227a931cd1b2495569c30b30d",
+    "src/ifcsg_precheck/sample.py": "cc4a0b2e7e5acfa0a1dcc7f2b03c3967bb9f0ff7b770554473800bb5588dfcc8",
+    "src/ifcsg_precheck/units.py": "bba4f5a5def339d413f42ba1b831b2175f63b59668280c8276b5833e1f8716de"
+  },
+  "summaries": {
+    "Authored review": {
+      "element_rule_pairs": 18,
+      "elements": 3,
+      "errors": 0,
+      "file": "reviewed.ifc",
+      "pass_rate": 1.0,
+      "passed_pairs": 18,
+      "rules_applied": 6,
+      "schema": "IFC4",
+      "top_rules": [
+        [
+          "georeference",
+          1
+        ]
+      ],
+      "unit_unverified_pairs": 0,
+      "warnings": 1
+    },
+    "Before": {
+      "element_rule_pairs": 18,
+      "elements": 3,
+      "errors": 11,
+      "file": "before.ifc",
+      "pass_rate": 0.16666666666666666,
+      "passed_pairs": 3,
+      "rules_applied": 6,
+      "schema": "IFC4",
+      "top_rules": [
+        [
+          "DEMO-MARK",
+          3
+        ],
+        [
+          "DEMO-METHOD",
+          3
+        ],
+        [
+          "DEMO-LOAD",
+          3
+        ],
+        [
+          "DEMO-REFERENCE",
+          3
+        ],
+        [
+          "DEMO-THICKNESS",
+          2
+        ],
+        [
+          "georeference",
+          1
+        ],
+        [
+          "DEMO-CLEARANCE",
+          1
+        ]
+      ],
+      "unit_unverified_pairs": 1,
+      "warnings": 5
+    },
+    "Derived": {
+      "element_rule_pairs": 18,
+      "elements": 3,
+      "errors": 2,
+      "file": "derived.ifc",
+      "pass_rate": 0.6666666666666666,
+      "passed_pairs": 12,
+      "rules_applied": 6,
+      "schema": "IFC4",
+      "top_rules": [
+        [
+          "DEMO-REFERENCE",
+          3
+        ],
+        [
+          "georeference",
+          1
+        ],
+        [
+          "DEMO-THICKNESS",
+          1
+        ],
+        [
+          "DEMO-LOAD",
+          1
+        ],
+        [
+          "DEMO-CLEARANCE",
+          1
+        ]
+      ],
+      "unit_unverified_pairs": 1,
+      "warnings": 5
+    }
+  }
+}

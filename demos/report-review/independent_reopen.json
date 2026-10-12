@@ -1,0 +1,17 @@
+{
+  "authored_review_typed_values_verified": true,
+  "method": "Fresh ifcopenshell.open of all three STEP outputs; property-local units and geometry read independently",
+  "preserved_explicit_mm_override": true,
+  "unresolved_sources_preserved_before_authored_review": true,
+  "verified_geometry_writes": [
+    {
+      "explicit_unit": "METRE",
+      "exported_value": 0.25,
+      "guid": "1gNND8DMLRnhwOonVDr7z8",
+      "independent_geometry_si_m": 0.25,
+      "measure_type": "IfcLengthMeasure",
+      "physical_si_m": 0.25,
+      "property": "SGPset_SlabDimension.Thickness"
+    }
+  ]
+}

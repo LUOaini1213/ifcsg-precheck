@@ -8,6 +8,8 @@ The historical measurements on two independently built models raised the share o
 
 [docs/WORKFLOW.md](docs/WORKFLOW.md) shows where this fits in the gateway process (as-is vs to-be) and how it could be rolled out.
 
+Try the [self-authored review demonstration](demos/report-review/index.html): inspect all findings and typed unit evidence, filter by review group/severity/GlobalId/property/status, and download complete JSON or the filtered CSV. Its three small IFCs show **check → derive → recheck → authored review**, with independently reopened typed writes. The [review guide](docs/REPORT_REVIEW.md) explains reproduction and static publication. This example contains no official mapping rows; its illustrative groups and scripted decisions do not claim regulatory approval or independent human annotation.
+
 ## What it checks
 
 | Level | Checks |

@@ -1,0 +1,17 @@
+#review { margin-top: 2rem; border-top: 3px solid #1f5fa8; }
+#review-filters { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: .8rem; }
+#review-filters label { display: flex; flex-direction: column; gap: .25rem; font-weight: 600; }
+input, select, button { font: inherit; box-sizing: border-box; padding: .65rem; border: 1px solid #607080; border-radius: .3rem; background: white; color: #1f2933; min-height: 44px; }
+input, select { width: 100%; min-width: 0; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid #165db1; outline-offset: 3px; }
+.downloads { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1rem 0; }
+.review-section td { overflow-wrap: anywhere; min-width: 7rem; }
+.review-section td:last-child { min-width: 18rem; white-space: pre-wrap; }
+.review-section h3 { font-size: 1rem; margin-bottom: .4rem; }
+.review-section h3 span { font-weight: normal; }
+tr[hidden] { display: none; }
+main, .review-section, .w { min-width: 0; }
+main p { overflow-wrap: anywhere; }
+nav { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin-bottom: 1rem; }
+@media(max-width: 480px) { main { padding: 16px 12px; } #review-filters { grid-template-columns: 1fr; } .downloads button { width: 100%; } }

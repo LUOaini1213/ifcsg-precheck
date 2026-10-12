@@ -1,0 +1,229 @@
+{
+  "findings": [
+    {
+      "agency": "",
+      "guid": "",
+      "ifc_class": "",
+      "message": "no IfcMapConversion: the model is not tied to SVY21 map coordinates",
+      "name": "",
+      "origin": "model",
+      "rule": "georeference",
+      "severity": "warning"
+    }
+  ],
+  "summary": {
+    "element_rule_pairs": 18,
+    "elements": 3,
+    "errors": 0,
+    "file": "reviewed.ifc",
+    "pass_rate": 1.0,
+    "rules_applied": 6,
+    "schema": "IFC4",
+    "top_rules": [
+      [
+        "georeference",
+        1
+      ]
+    ],
+    "unit_unverified_pairs": 0,
+    "warnings": 1
+  },
+  "unit_results": [
+    {
+      "conversion_factor": 0.001,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": true,
+      "explicit_unit_definition": {
+        "Name": "METRE",
+        "Prefix": "MILLI",
+        "UnitType": "LENGTHUNIT",
+        "id": 39,
+        "ifc_class": "IfcSIUnit"
+      },
+      "guid": "0IotBT2fjNF97yb0Be3eao",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.25,
+      "property": "Thickness",
+      "property_id": 42,
+      "property_origin": "instance",
+      "pset": "SGPset_SlabDimension",
+      "raw_value": 250.0,
+      "rule": "DEMO-THICKNESS",
+      "source_scale_si": 0.001,
+      "source_unit": "MILLI METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "explicit_property"
+    },
+    {
+      "conversion_factor": 1.0,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": true,
+      "explicit_unit_definition": {
+        "Name": "METRE",
+        "Prefix": null,
+        "UnitType": "LENGTHUNIT",
+        "id": 94,
+        "ifc_class": "IfcSIUnit"
+      },
+      "guid": "1gNND8DMLRnhwOonVDr7z8",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.25,
+      "property": "Thickness",
+      "property_id": 98,
+      "property_origin": "instance",
+      "pset": "SGPset_SlabDimension",
+      "raw_value": 0.25,
+      "rule": "DEMO-THICKNESS",
+      "source_scale_si": 1.0,
+      "source_unit": "METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "explicit_property"
+    },
+    {
+      "conversion_factor": 1.0,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": true,
+      "explicit_unit_definition": {
+        "Name": "METRE",
+        "Prefix": null,
+        "UnitType": "LENGTHUNIT",
+        "id": 110,
+        "ifc_class": "IfcSIUnit"
+      },
+      "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.25,
+      "property": "Thickness",
+      "property_id": 88,
+      "property_origin": "instance",
+      "pset": "SGPset_SlabDimension",
+      "raw_value": 0.25,
+      "rule": "DEMO-THICKNESS",
+      "source_scale_si": 1.0,
+      "source_unit": "METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "explicit_property"
+    },
+    {
+      "conversion_factor": 1.0,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": false,
+      "guid": "0IotBT2fjNF97yb0Be3eao",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.8,
+      "property": "Clearance",
+      "property_id": 38,
+      "property_origin": "instance",
+      "pset": "Demo_Review",
+      "raw_value": 0.8,
+      "rule": "DEMO-CLEARANCE",
+      "source_scale_si": 1.0,
+      "source_unit": "METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "project"
+    },
+    {
+      "conversion_factor": 1.0,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": false,
+      "guid": "1gNND8DMLRnhwOonVDr7z8",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.8,
+      "property": "Clearance",
+      "property_id": 64,
+      "property_origin": "instance",
+      "pset": "Demo_Review",
+      "raw_value": 0.8,
+      "rule": "DEMO-CLEARANCE",
+      "source_scale_si": 1.0,
+      "source_unit": "METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "project"
+    },
+    {
+      "conversion_factor": 1.0,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": true,
+      "explicit_unit_definition": {
+        "Name": "METRE",
+        "Prefix": null,
+        "UnitType": "LENGTHUNIT",
+        "id": 111,
+        "ifc_class": "IfcSIUnit"
+      },
+      "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.8,
+      "property": "Clearance",
+      "property_id": 83,
+      "property_origin": "instance",
+      "pset": "Demo_Review",
+      "raw_value": 0.8,
+      "rule": "DEMO-CLEARANCE",
+      "source_scale_si": 1.0,
+      "source_unit": "METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "explicit_property"
+    }
+  ]
+}
