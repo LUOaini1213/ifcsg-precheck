@@ -1,0 +1,41 @@
+{
+  "started_at_utc": "2026-10-02T21:38:01.014186+00:00",
+  "python": "3.11.5",
+  "ifcopenshell": "0.8.5",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "openpyxl": "3.1.5"
+  },
+  "models": {
+    "facade": {
+      "file": "facade_bim.ifc",
+      "sha256": "4ffe9aeab801dd8a5e116892f7de2b6879ad7248f8e0315de4f98f71f082dc70"
+    },
+    "bridge": {
+      "file": "bridge_bim.ifc",
+      "sha256": "c3bcf323cc1970a5dc630ed00cb4fbe71c365776347d423e0dd10ab818f705bf"
+    },
+    "sample": {
+      "file": "sample_block.ifc",
+      "sha256": "9d471b69d771240952ab76339c9e288f1b7affa8d1590660a0a8f3460e04f8e6"
+    }
+  },
+  "rules": [
+    {
+      "file": "ifcsg_mapping.json",
+      "sha256": "8b019b8fb074d14a2a585d4a8468cbf3e7842dd76542bd53b193baa5c32f349a"
+    }
+  ],
+  "rule_count": 1456,
+  "source_sha256": {
+    "scripts/evaluate.py": "5ab8c0e3b05540fa0df0f27aafc4dc64ab010c331e672287e45d99a7f3949d09",
+    "src/ifcsg_precheck/__init__.py": "41362a5ea4931c546433d4c48290c5707bf02dbbea1c3aafa9f43d1225e47003",
+    "src/ifcsg_precheck/check.py": "3cd23478ef13c1cd775f3ea6613b1e073e41c9f4e45c8ddafaaca0ee9faa2aa9",
+    "src/ifcsg_precheck/cli.py": "42ef84c8124c6c1db058ee31e5ad070d33ad77ac3508df19bbf3a5dceaa8c575",
+    "src/ifcsg_precheck/enrich.py": "ca359d2bcb092151902d77704c9181b0b875da6a4c6abe48d63978d148e29f55",
+    "src/ifcsg_precheck/mapping.py": "768a2c9cdceddd66a9eb8e385770be729dd0cf33005be356fc5d5c10b7e501bc",
+    "src/ifcsg_precheck/report.py": "f1c9ea0745b1c7371e2a0cce404767a67c8bda47cacbd87688fb9cee31210130",
+    "src/ifcsg_precheck/sample.py": "fd93d72b06c7eb342ad8055598f6a0b85d2e1eb9c050a4d18ed68c0ea3f8d58e"
+  }
+}

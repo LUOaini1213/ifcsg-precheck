@@ -1,0 +1,108 @@
+{
+  "mapping": {
+    "file": "industry-mapping-4-dec-2025.xlsx",
+    "sha256": "f436aa273c366f04dcf6eef55e365081a8b76a2271520c188174a1c69f803114",
+    "sheet": "CX Pilot Mapping",
+    "rows": 833
+  },
+  "property_type_unit_counts": [
+    {
+      "property_type": "Area",
+      "unit": "m2",
+      "rows": 9
+    },
+    {
+      "property_type": "Boolean",
+      "unit": "N.A",
+      "rows": 126
+    },
+    {
+      "property_type": "Integer",
+      "unit": "N.A",
+      "rows": 8
+    },
+    {
+      "property_type": "Integer",
+      "unit": "kN",
+      "rows": 17
+    },
+    {
+      "property_type": "Integer",
+      "unit": "kPa",
+      "rows": 2
+    },
+    {
+      "property_type": "Label",
+      "unit": "N.A",
+      "rows": 355
+    },
+    {
+      "property_type": "Label",
+      "unit": "hr",
+      "rows": 8
+    },
+    {
+      "property_type": "Label",
+      "unit": "m",
+      "rows": 1
+    },
+    {
+      "property_type": "Length",
+      "unit": "mm",
+      "rows": 109
+    },
+    {
+      "property_type": "N.A",
+      "unit": "N.A",
+      "rows": 163
+    },
+    {
+      "property_type": "Real",
+      "unit": "L",
+      "rows": 2
+    },
+    {
+      "property_type": "Real",
+      "unit": "N.A",
+      "rows": 8
+    },
+    {
+      "property_type": "Real",
+      "unit": "SHD m",
+      "rows": 10
+    },
+    {
+      "property_type": "Real",
+      "unit": "m",
+      "rows": 4
+    },
+    {
+      "property_type": "Real",
+      "unit": "tonnes",
+      "rows": 2
+    },
+    {
+      "property_type": "Volume",
+      "unit": "m3",
+      "rows": 6
+    },
+    {
+      "property_type": "VolumetricFlowRate",
+      "unit": "L/s",
+      "rows": 3
+    }
+  ],
+  "generated_rule_count": 1456,
+  "generated_rule_target_status_counts": {
+    "lexical_qualifier": 20,
+    "no_physical_target": 1022,
+    "physical_target_supported": 386,
+    "target_requires_review": 28
+  },
+  "interpretation": "Target coverage is not proof of source-unit verification. Generic IfcInteger/IfcReal require an explicit Unit; Label qualifiers remain literal; SHD requires datum review.",
+  "source_sha256": {
+    "scripts/unit_catalog.py": "e68a8c73552317a68514ffbfac44c86b80e607b9394e13610e408542a84bf048",
+    "src/ifcsg_precheck/mapping.py": "3f19f1c2b648b0b5985e2f0b5ce0f1a6bd6f09a1356553de7e80e984e1ab423b",
+    "src/ifcsg_precheck/units.py": "bba4f5a5def339d413f42ba1b831b2175f63b59668280c8276b5833e1f8716de"
+  }
+}

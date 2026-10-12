@@ -1,0 +1,21 @@
+{
+  "unit_writes_reopened_and_physically_verified": {
+    "facade": 9,
+    "bridge": 1964,
+    "sample": 0
+  },
+  "historical_assets_checked_against_b06227f_checkout_bytes": 10,
+  "source_input_rule_catalog_hashes_match": true,
+  "no_deferred_geometry_in_this_corpus": true,
+  "verification": "CSV SI source value times recorded conversion factor equals typed STEP nominal value; explicit SI definition independently checked against metre/millimetre scale.",
+  "offline_gate": {
+    "pytest_cases": 175,
+    "skipped": 0,
+    "harness_self_checks": 11,
+    "deliberate_mutations": 55,
+    "detected": 55,
+    "mutation_seconds": 411.2,
+    "raw_byte_identical_source_test_files": 19,
+    "source_restoration_verified": true
+  }
+}

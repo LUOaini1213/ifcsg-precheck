@@ -18,7 +18,8 @@ import pandas as pd
 SHEET = "CX Pilot Mapping"
 AGENCY = {"NPARKS": "NParks"}  # the mapping spells NParks two ways
 NUMBER_TYPES = {"length", "area", "volume", "real", "integer", "count", "number", "positive length", "ratio",
-                "thermal transmittance", "force", "pressure", "angle", "plane angle", "mass", "power", "time"}
+                "thermal transmittance", "force", "pressure", "angle", "plane angle", "mass", "power", "time",
+                "volumetricflowrate", "volumetric flow rate"}
 
 
 def _cells(value):
@@ -80,6 +81,7 @@ def convert(xlsx, out=None):
                     "predefined_type": sub.lstrip("*") if sub else None,
                     "userdefined": bool(sub and sub.startswith("*")),
                     "pset": pset, "property": prop, "value_type": vtype,
+                    "property_type": str(row[c_type]).strip(),
                     "unit": None if str(row[c_unit]).upper() in ("N.A", "NAN") else str(row[c_unit]),
                     "allowed_values": allowed(row[c_acc], vtype),
                     "severity": "error"})

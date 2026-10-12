@@ -1,0 +1,236 @@
+{
+ "facade": {
+  "schema": "IFC4",
+  "elements": 859,
+  "rules_applied": 32,
+  "element_rule_pairs": 208,
+  "pass_before": 0.0,
+  "pass_after": 0.12980769230769232,
+  "auto_filled": 18,
+  "errors_before": 212,
+  "errors_after": 185,
+  "model_level_findings": [
+   [
+    "containment",
+    "element is not contained in a storey (or aggregated into one)"
+   ],
+   [
+    "georeference",
+    "no IfcMapConversion: the model is not tied to SVY21 map coordinates"
+   ]
+  ],
+  "top_remaining": [
+   [
+    [
+     "IfcSlab",
+     "SGPset_Slab"
+    ],
+    99
+   ],
+   [
+    [
+     "IfcSlab",
+     "SGPset_SlabReinforcement"
+    ],
+    63
+   ],
+   [
+    [
+     "IfcSlab",
+     "SGPset_Material"
+    ],
+    9
+   ],
+   [
+    [
+     "IfcBuilding",
+     "SGPset_PilingDesignParameter"
+    ],
+    7
+   ],
+   [
+    [
+     "IfcBuilding",
+     "SGPset_Building"
+    ],
+    2
+   ],
+   [
+    [
+     "IfcSite",
+     "SGPset_Site"
+    ],
+    1
+   ]
+  ],
+  "seconds": 8.1
+ },
+ "bridge": {
+  "schema": "IFC4X3",
+  "elements": 1470,
+  "rules_applied": 104,
+  "element_rule_pairs": 27249,
+  "pass_before": 0.0,
+  "pass_after": 0.1779147858637014,
+  "auto_filled": 5136,
+  "errors_before": 28720,
+  "errors_after": 23872,
+  "model_level_findings": [
+   [
+    "containment",
+    "element is not contained in a storey (or aggregated into one)"
+   ],
+   [
+    "georeference",
+    "no IfcMapConversion: the model is not tied to SVY21 map coordinates"
+   ],
+   [
+    "schema",
+    "schema IFC4X3; IFC+SG submissions use IFC4, so the model needs exporting as IFC4 (IFC4X3 classes such as IfcBearing have no IFC4 equivalent)"
+   ],
+   [
+    "spatial_structure",
+    "no IfcBuilding"
+   ]
+  ],
+  "top_remaining": [
+   [
+    [
+     "IfcBeam",
+     "SGPset_BeamReinforcement"
+    ],
+    11424
+   ],
+   [
+    [
+     "IfcBeam",
+     "SGPset_Beam"
+    ],
+    4080
+   ],
+   [
+    [
+     "IfcBeam",
+     "SGPset_SteelConnection"
+    ],
+    4080
+   ],
+   [
+    [
+     "IfcBeam",
+     "SGPset_BeamDimension"
+    ],
+    816
+   ],
+   [
+    [
+     "IfcPile",
+     "SGPset_Pile"
+    ],
+    364
+   ],
+   [
+    [
+     "IfcPile",
+     "SGPset_PileDimension"
+    ],
+    312
+   ],
+   [
+    [
+     "IfcColumn",
+     "SGPset_SteelConnection"
+    ],
+    220
+   ],
+   [
+    [
+     "IfcPile",
+     "SGPset_PileReinforcement"
+    ],
+    208
+   ]
+  ],
+  "seconds": 41.3
+ },
+ "sample": {
+  "schema": "IFC4",
+  "elements": 10,
+  "rules_applied": 67,
+  "element_rule_pairs": 191,
+  "pass_before": 0.09947643979057591,
+  "pass_after": 0.10471204188481675,
+  "auto_filled": 1,
+  "errors_before": 173,
+  "errors_after": 172,
+  "model_level_findings": [
+   [
+    "containment",
+    "element is not contained in a storey (or aggregated into one)"
+   ],
+   [
+    "georeference",
+    "no IfcMapConversion: the model is not tied to SVY21 map coordinates"
+   ]
+  ],
+  "top_remaining": [
+   [
+    [
+     "IfcWall",
+     "SGPset_Wall"
+    ],
+    60
+   ],
+   [
+    [
+     "IfcDoor",
+     "SGPset_Door"
+    ],
+    28
+   ],
+   [
+    [
+     "IfcWall",
+     "SGPset_WallReinforcement"
+    ],
+    20
+   ],
+   [
+    [
+     "IfcDoor",
+     "SGPset_DoorDimension"
+    ],
+    18
+   ],
+   [
+    [
+     "IfcSlab",
+     "SGPset_Slab"
+    ],
+    11
+   ],
+   [
+    [
+     "IfcBuilding",
+     "SGPset_PilingDesignParameter"
+    ],
+    7
+   ],
+   [
+    [
+     "IfcSlab",
+     "SGPset_SlabReinforcement"
+    ],
+    7
+   ],
+   [
+    [
+     "IfcWall",
+     "SGPset_WallDimension"
+    ],
+    6
+   ]
+  ],
+  "seconds": 0.2
+ }
+}

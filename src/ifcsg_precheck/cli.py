@@ -43,11 +43,12 @@ def main(argv=None):
         else:
             from .enrich import enrich
             wanted = {(x["entity"], x["pset"], x["property"]) for x in rules}
-            rows = enrich(a.ifc, a.out, str(a.out) + ".log.csv", wanted)
+            pending = []
+            rows = enrich(a.ifc, a.out, str(a.out) + ".log.csv", wanted, rules=rules, pending=pending)
             rep = check(a.out, rules)
-            print(f"{len(rows)} values filled;", json.dumps(rep.summary(), default=float))
+            print(f"{len(rows)} values filled; {len(pending)} derivations deferred;", json.dumps(rep.summary(), default=float))
             if a.html:
-                Path(a.html).write_text(render(rep, rows, "IFC+SG check after auto-fill"), encoding="utf-8")
+                Path(a.html).write_text(render(rep, rows, "IFC+SG check after auto-fill", pending), encoding="utf-8")
 
 
 if __name__ == "__main__":
