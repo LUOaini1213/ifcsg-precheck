@@ -159,6 +159,9 @@ def generate(directory):
     before = check(directory / "before.ifc", chosen)
     pending = []
     rows = enrich(directory / "before.ifc", directory / "derived.ifc", directory / "derivations.csv", rules=chosen, pending=pending)
+    # Canonicalize only the public demo sidecar; the production enrich writer
+    # and its historical outputs retain their existing behavior and bytes.
+    write_json(directory / "derivations.csv.pending.json", pending)
     stable_file(ifcopenshell.open(str(directory / "derived.ifc")), directory / "derived.ifc")
     derived = check(directory / "derived.ifc", chosen)
     decisions = authored_review(directory / "derived.ifc", directory / "reviewed.ifc")
