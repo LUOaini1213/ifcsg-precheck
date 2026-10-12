@@ -36,7 +36,7 @@ def run(name, path, rules, out=OUT):
     after = check(enriched, rules)
     for tag, rep in (("before", before), ("after", after)):
         (out / f"{name}_{tag}.json").write_text(json.dumps(rep.to_json(), ensure_ascii=False), encoding="utf-8")
-    (out / f"{name}_report.html").write_text(render(after, rows, f"IFC+SG check after auto-fill: {name}", pending), encoding="utf-8")
+    (out / f"{name}_report.html").write_text(render(after, rows, f"IFC+SG check after auto-fill: {name}", pending, rules=rules), encoding="utf-8")
     gaps = Counter((f.ifc_class, f.message.split(" ")[3] if f.message.startswith("missing property set") else
                     f.message.split(" ")[0].split(".")[0]) for f in after.findings if f.origin == "mapping")
     s_before, s_after = before.summary(), after.summary()

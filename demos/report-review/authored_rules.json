@@ -1,0 +1,70 @@
+[
+  {
+    "agency": "Demo structures",
+    "entity": "IfcSlab",
+    "id": "DEMO-THICKNESS",
+    "max": 0.26,
+    "min": 0.24,
+    "predefined_type": "FLOOR",
+    "property": "Thickness",
+    "pset": "SGPset_SlabDimension",
+    "severity": "error",
+    "unit": "m",
+    "value_type": "number"
+  },
+  {
+    "agency": "Demo coordination",
+    "entity": "IfcSlab",
+    "id": "DEMO-MARK",
+    "predefined_type": "FLOOR",
+    "property": "Mark",
+    "pset": "SGPset_SlabDimension",
+    "severity": "error",
+    "value_type": "text"
+  },
+  {
+    "agency": "Demo structures",
+    "allowed_values": [
+      "CIS",
+      "PC"
+    ],
+    "entity": "IfcSlab",
+    "id": "DEMO-METHOD",
+    "predefined_type": "FLOOR",
+    "property": "ConstructionMethod",
+    "pset": "SGPset_Slab",
+    "severity": "error",
+    "value_type": "text"
+  },
+  {
+    "agency": "Demo structures",
+    "entity": "IfcSlab",
+    "id": "DEMO-LOAD",
+    "predefined_type": "FLOOR",
+    "property": "LoadBearing",
+    "pset": "SGPset_Slab",
+    "severity": "error",
+    "value_type": "boolean"
+  },
+  {
+    "agency": "Demo coordination",
+    "entity": "IfcSlab",
+    "id": "DEMO-REFERENCE",
+    "predefined_type": "FLOOR",
+    "property": "ReviewReference",
+    "pset": "Demo_Review",
+    "severity": "warning",
+    "value_type": "text"
+  },
+  {
+    "agency": "Demo coordination",
+    "entity": "IfcSlab",
+    "id": "DEMO-CLEARANCE",
+    "predefined_type": "FLOOR",
+    "property": "Clearance",
+    "pset": "Demo_Review",
+    "severity": "error",
+    "unit": "m",
+    "value_type": "number"
+  }
+]

@@ -1,0 +1,10 @@
+guid,class,name,pset,property,value,source,conversion_factor,geometry_project_unit,mapping_units,measure_type,source_unit,source_value_si_m,unit
+0IotBT2fjNF97yb0Be3eao,IfcSlab,S-ready,SGPset_SlabDimension,Mark,S-ready,Tag,,,,,,,
+0IotBT2fjNF97yb0Be3eao,IfcSlab,S-ready,SGPset_Slab,ConstructionMethod,CIS,Pset_ConcreteElementGeneral.CastingMethod,,,,,,,
+0IotBT2fjNF97yb0Be3eao,IfcSlab,S-ready,SGPset_Slab,LoadBearing,True,Pset_SlabCommon.LoadBearing,,,,,,,
+1gNND8DMLRnhwOonVDr7z8,IfcSlab,S-derive,SGPset_SlabDimension,Mark,S-derive,Tag,,,,,,,
+1gNND8DMLRnhwOonVDr7z8,IfcSlab,S-derive,SGPset_SlabDimension,Thickness,0.25,geometry: smallest extent,1.0,METRE,m,IfcLengthMeasure,SI metre geometry,0.25,m
+1gNND8DMLRnhwOonVDr7z8,IfcSlab,S-derive,SGPset_Slab,ConstructionMethod,CIS,Pset_ConcreteElementGeneral.CastingMethod,,,,,,,
+1gNND8DMLRnhwOonVDr7z8,IfcSlab,S-derive,SGPset_Slab,LoadBearing,True,Pset_SlabCommon.LoadBearing,,,,,,,
+2VBDEcUyTIt9tpVVDRMs_T,IfcSlab,S-deferred,SGPset_SlabDimension,Mark,S-deferred,Tag,,,,,,,
+2VBDEcUyTIt9tpVVDRMs_T,IfcSlab,S-deferred,SGPset_Slab,ConstructionMethod,CIS,Pset_ConcreteElementGeneral.CastingMethod,,,,,,,

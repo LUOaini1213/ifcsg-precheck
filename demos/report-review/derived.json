@@ -1,0 +1,249 @@
+{
+  "findings": [
+    {
+      "agency": "",
+      "guid": "",
+      "ifc_class": "",
+      "message": "no IfcMapConversion: the model is not tied to SVY21 map coordinates",
+      "name": "",
+      "origin": "model",
+      "rule": "georeference",
+      "severity": "warning"
+    },
+    {
+      "agency": "Demo structures",
+      "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+      "ifc_class": "IfcSlab",
+      "message": "SGPset_SlabDimension.Thickness is empty",
+      "name": "S-deferred",
+      "origin": "mapping",
+      "rule": "DEMO-THICKNESS",
+      "severity": "error"
+    },
+    {
+      "agency": "Demo structures",
+      "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+      "ifc_class": "IfcSlab",
+      "message": "SGPset_Slab has no LoadBearing",
+      "name": "S-deferred",
+      "origin": "mapping",
+      "rule": "DEMO-LOAD",
+      "severity": "error"
+    },
+    {
+      "agency": "Demo coordination",
+      "guid": "0IotBT2fjNF97yb0Be3eao",
+      "ifc_class": "IfcSlab",
+      "message": "Demo_Review has no ReviewReference",
+      "name": "S-ready",
+      "origin": "mapping",
+      "rule": "DEMO-REFERENCE",
+      "severity": "warning"
+    },
+    {
+      "agency": "Demo coordination",
+      "guid": "1gNND8DMLRnhwOonVDr7z8",
+      "ifc_class": "IfcSlab",
+      "message": "Demo_Review has no ReviewReference",
+      "name": "S-derive",
+      "origin": "mapping",
+      "rule": "DEMO-REFERENCE",
+      "severity": "warning"
+    },
+    {
+      "agency": "Demo coordination",
+      "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+      "ifc_class": "IfcSlab",
+      "message": "Demo_Review has no ReviewReference",
+      "name": "S-deferred",
+      "origin": "mapping",
+      "rule": "DEMO-REFERENCE",
+      "severity": "warning"
+    },
+    {
+      "agency": "Demo coordination",
+      "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+      "ifc_class": "IfcSlab",
+      "message": "Demo_Review.Clearance unit unverified: generic scalar has no explicit physical unit; project length unit cannot be guessed",
+      "name": "S-deferred",
+      "origin": "mapping",
+      "rule": "DEMO-CLEARANCE",
+      "severity": "warning"
+    }
+  ],
+  "summary": {
+    "element_rule_pairs": 18,
+    "elements": 3,
+    "errors": 2,
+    "file": "derived.ifc",
+    "pass_rate": 0.6666666666666666,
+    "rules_applied": 6,
+    "schema": "IFC4",
+    "top_rules": [
+      [
+        "DEMO-REFERENCE",
+        3
+      ],
+      [
+        "georeference",
+        1
+      ],
+      [
+        "DEMO-THICKNESS",
+        1
+      ],
+      [
+        "DEMO-LOAD",
+        1
+      ],
+      [
+        "DEMO-CLEARANCE",
+        1
+      ]
+    ],
+    "unit_unverified_pairs": 1,
+    "warnings": 5
+  },
+  "unit_results": [
+    {
+      "conversion_factor": 0.001,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": true,
+      "explicit_unit_definition": {
+        "Name": "METRE",
+        "Prefix": "MILLI",
+        "UnitType": "LENGTHUNIT",
+        "id": 39,
+        "ifc_class": "IfcSIUnit"
+      },
+      "guid": "0IotBT2fjNF97yb0Be3eao",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.25,
+      "property": "Thickness",
+      "property_id": 42,
+      "property_origin": "instance",
+      "pset": "SGPset_SlabDimension",
+      "raw_value": 250.0,
+      "rule": "DEMO-THICKNESS",
+      "source_scale_si": 0.001,
+      "source_unit": "MILLI METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "explicit_property"
+    },
+    {
+      "conversion_factor": 1.0,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": true,
+      "explicit_unit_definition": {
+        "Name": "METRE",
+        "Prefix": null,
+        "UnitType": "LENGTHUNIT",
+        "id": 94,
+        "ifc_class": "IfcSIUnit"
+      },
+      "guid": "1gNND8DMLRnhwOonVDr7z8",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.25,
+      "property": "Thickness",
+      "property_id": 98,
+      "property_origin": "instance",
+      "pset": "SGPset_SlabDimension",
+      "raw_value": 0.25,
+      "rule": "DEMO-THICKNESS",
+      "source_scale_si": 1.0,
+      "source_unit": "METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "explicit_property"
+    },
+    {
+      "conversion_factor": 1.0,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": false,
+      "guid": "0IotBT2fjNF97yb0Be3eao",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.8,
+      "property": "Clearance",
+      "property_id": 38,
+      "property_origin": "instance",
+      "pset": "Demo_Review",
+      "raw_value": 0.8,
+      "rule": "DEMO-CLEARANCE",
+      "source_scale_si": 1.0,
+      "source_unit": "METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "project"
+    },
+    {
+      "conversion_factor": 1.0,
+      "dimensions": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "explicit_unit": false,
+      "guid": "1gNND8DMLRnhwOonVDr7z8",
+      "measure_type": "IfcLengthMeasure",
+      "normalized_value": 0.8,
+      "property": "Clearance",
+      "property_id": 64,
+      "property_origin": "instance",
+      "pset": "Demo_Review",
+      "raw_value": 0.8,
+      "rule": "DEMO-CLEARANCE",
+      "source_scale_si": 1.0,
+      "source_unit": "METRE",
+      "status": "verified",
+      "target_scale_si": 1,
+      "target_unit": "m",
+      "unit_origin": "project"
+    },
+    {
+      "explicit_unit": false,
+      "guid": "2VBDEcUyTIt9tpVVDRMs_T",
+      "measure_type": "IfcReal",
+      "property": "Clearance",
+      "property_id": 83,
+      "property_origin": "instance",
+      "pset": "Demo_Review",
+      "raw_value": 0.8,
+      "reason": "generic scalar has no explicit physical unit; project length unit cannot be guessed",
+      "rule": "DEMO-CLEARANCE",
+      "status": "unverified",
+      "target_unit": "m"
+    }
+  ]
+}

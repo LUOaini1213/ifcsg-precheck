@@ -39,7 +39,7 @@ def main(argv=None):
             if a.json:
                 Path(a.json).write_text(json.dumps(rep.to_json(), ensure_ascii=False), encoding="utf-8")
             if a.html:
-                Path(a.html).write_text(render(rep), encoding="utf-8")
+                Path(a.html).write_text(render(rep, rules=rules), encoding="utf-8")
         else:
             from .enrich import enrich
             wanted = {(x["entity"], x["pset"], x["property"]) for x in rules}
@@ -48,7 +48,7 @@ def main(argv=None):
             rep = check(a.out, rules)
             print(f"{len(rows)} values filled; {len(pending)} derivations deferred;", json.dumps(rep.summary(), default=float))
             if a.html:
-                Path(a.html).write_text(render(rep, rows, "IFC+SG check after auto-fill", pending), encoding="utf-8")
+                Path(a.html).write_text(render(rep, rows, "IFC+SG check after auto-fill", pending, rules=rules), encoding="utf-8")
 
 
 if __name__ == "__main__":

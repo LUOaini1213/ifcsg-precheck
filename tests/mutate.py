@@ -117,7 +117,9 @@ MUTANTS = [('src/ifcsg_precheck/check.py', 'elif m.schema != "IFC4":', 'elif Fal
  ('src/ifcsg_precheck/enrich.py', 'if any(t is None or t.dimensions != LENGTH for t in targets):', 'if False:'),
  ('src/ifcsg_precheck/check.py', 'if evidence["status"] == "unverified":', 'if False:'),
  ('src/ifcsg_precheck/check.py', 'value = evidence["normalized_value"]', 'value = evidence["raw_value"]'),
- ('src/ifcsg_precheck/enrich.py', 'conversion_factor=1 / write_unit.scale', 'conversion_factor=.001 / write_unit.scale')]
+ ('src/ifcsg_precheck/enrich.py', 'conversion_factor=1 / write_unit.scale', 'conversion_factor=.001 / write_unit.scale'),
+ ('src/ifcsg_precheck/report.py', 'for finding in report.findings:', 'for finding in report.findings[:50]:'),
+ ('src/ifcsg_precheck/report.py', '.replace("<", "\\\\u003c")', '.replace("<", "<")')]
 
 class HarnessError(RuntimeError):
     """The run supplies no valid evidence about a mutant."""
