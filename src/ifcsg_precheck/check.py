@@ -18,6 +18,7 @@ from pathlib import Path
 import ifcopenshell
 import ifcopenshell.util.element as uel
 import ifcopenshell.util.placement as upl
+from .units import audit
 
 RULES_DIR = Path(__file__).resolve().parents[2] / "rules"
 
@@ -47,6 +48,8 @@ class Report:
     rules_applied: int = 0
     element_rule_pairs: int = 0      # (element, rule) combinations checked
     passed_pairs: int = 0
+    unit_unverified_pairs: int = 0
+    unit_results: list = field(default_factory=list)
 
     def summary(self):
         by_rule = Counter(f.rule for f in self.findings)
@@ -54,11 +57,13 @@ class Report:
                 "errors": sum(f.severity == "error" for f in self.findings),
                 "warnings": sum(f.severity == "warning" for f in self.findings),
                 "rules_applied": self.rules_applied, "element_rule_pairs": self.element_rule_pairs,
+                "unit_unverified_pairs": self.unit_unverified_pairs,
                 "pass_rate": (self.passed_pairs / self.element_rule_pairs) if self.element_rule_pairs else None,
                 "top_rules": by_rule.most_common(10)}
 
     def to_json(self):
-        return {"summary": self.summary(), "findings": [asdict(f) for f in self.findings]}
+        return {"summary": self.summary(), "findings": [asdict(f) for f in self.findings],
+                "unit_results": self.unit_results}
 
 
 def _f(el, rule, severity, message, agency="", origin="model"):
@@ -189,7 +194,26 @@ def property_checks(m, rules, report):
                 out.append(_f(el, rule["id"], rule.get("severity", "error"),
                               f"{rule['pset']} has no {rule['property']}", rule.get("agency", ""), origin="mapping"))
                 continue
-            problem = value_problem(rule, pset[rule["property"]])
+            value = pset[rule["property"]]
+            # Validate primitive type before converting. Bounds refer to the
+            # target mapping unit, so do not apply them to an unnormalized value.
+            problem = value_problem(dict(rule, min=None, max=None), value)
+            if problem:
+                out.append(_f(el, rule["id"], rule.get("severity", "error"),
+                              f"{rule['pset']}.{rule['property']} {problem}", rule.get("agency", ""), origin="mapping"))
+                continue
+            if rule.get("unit"):
+                evidence = audit(m, el, rule)
+                report.unit_results.append(evidence)
+                if evidence["status"] == "unverified":
+                    report.unit_unverified_pairs += 1
+                    out.append(_f(el, rule["id"], "warning",
+                                  f"{rule['pset']}.{rule['property']} unit unverified: {evidence['reason']}",
+                                  rule.get("agency", ""), origin="mapping"))
+                    continue
+                if evidence["status"] == "verified":
+                    value = evidence["normalized_value"]
+            problem = value_problem(rule, value)
             if problem:
                 out.append(_f(el, rule["id"], rule.get("severity", "error"),
                               f"{rule['pset']}.{rule['property']} {problem}", rule.get("agency", ""), origin="mapping"))

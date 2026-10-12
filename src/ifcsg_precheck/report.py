@@ -9,7 +9,7 @@ def _table(headers, rows):
     return f"<table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table>"
 
 
-def render(report, enrichment_rows=None, title="IFC+SG pre-submission check"):
+def render(report, enrichment_rows=None, title="IFC+SG pre-submission check", enrichment_pending=None):
     s = report.summary()
     f = report.findings
     by_agency = Counter((x.agency or "Unspecified mapping agency") if x.origin == "mapping" else "model" for x in f)
@@ -32,6 +32,19 @@ def render(report, enrichment_rows=None, title="IFC+SG pre-submission check"):
     worst = sorted(per_el.items(), key=lambda kv: -len(kv[1]))[:50]
     filled = Counter((r["pset"], r["property"], r["source"]) for r in (enrichment_rows or []))
     pr = "n/a" if s["pass_rate"] is None else f"{s['pass_rate']:.1%}"
+    unit_html = ""
+    if report.unit_results:
+        unit_html = ("<h2>Property-unit evidence</h2><p>Unverified units do not count as passed. "
+                     "Label qualifiers retain their lexical values; these checks do not establish regulatory approval.</p><div class=w>" +
+                     _table(["GlobalId", "Property", "Raw value", "IFC measure", "Source unit", "Target unit", "Normalized", "Status / reason"],
+                            [(r["guid"], r["pset"] + "." + r["property"], r.get("raw_value", ""), r.get("measure_type", ""),
+                              r.get("source_unit", ""), r.get("target_unit", ""), r.get("normalized_value", ""),
+                              r["status"] + (": " + r["reason"] if r.get("reason") else "")) for r in report.unit_results]) + "</div>")
+    deferred_html = ""
+    if enrichment_pending:
+        deferred_html = ("<h2>Derivations deferred for review</h2><div class=w>" +
+                         _table(["GlobalId", "Property", "Reason"],
+                                [(r["guid"], r["pset"] + "." + r["property"], r["reason"]) for r in enrichment_pending]) + "</div>")
     return f"""<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title><style>
 body{{font:14px/1.5 Segoe UI,Helvetica,Arial,sans-serif;color:#1f2933;background:#f5f7fa;margin:0}} main{{max-width:1100px;margin:0 auto;padding:20px 16px}}
@@ -46,5 +59,6 @@ h1{{overflow-wrap:anywhere}} details{{margin:8px 0 18px}} summary{{cursor:pointe
 <h2>Findings by agency</h2><div class=w>{_table(["Agency", "Findings"], by_agency.most_common())}</div>
 <h2>Most common gaps</h2><p>Counts are findings, not distinct elements. One element can fail several property rules.</p><div class=w>{_table(["IFC class", "Gap", "Findings"], [(c, g, n) for (c, g), n in by_pset.most_common(25)])}</div>
 <h2>Auto-filled from existing model data</h2><div class=w>{_table(["Property set", "Property", "Source", "Values"], [(a, b, c, n) for (a, b, c), n in filled.most_common()]) if filled else "<p>Nothing could be derived.</p>"}</div>
+{unit_html}{deferred_html}
 <h2>Elements with the most gaps (top 50)</h2><div class=w>{_table(["GlobalId", "Class", "Name", "Gaps", "First gaps"], [(g, c, n, len(m), "; ".join(m[:3])) for (g, c, n), m in worst])}</div>
 </main></body></html>"""

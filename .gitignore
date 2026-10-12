@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+.venv/
 # BCA's mapping may not be republished; download it yourself (see README)
 samples/*.xlsx
 rules/*.json
@@ -10,3 +11,4 @@ reports/**/*_after.json
 reports/**/*_enriched.ifc
 reports/**/*.log.csv
 reports/**/*_enrichment_log.csv
+reports/**/*.pending.json

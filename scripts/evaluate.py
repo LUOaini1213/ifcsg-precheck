@@ -31,11 +31,12 @@ def run(name, path, rules, out=OUT):
     before = check(path, rules)
     wanted = {(r["entity"], r["pset"], r["property"]) for r in rules}
     enriched = out / f"{name}_enriched.ifc"
-    rows = enrich(path, enriched, out / f"{name}_enrichment_log.csv", wanted)
+    pending = []
+    rows = enrich(path, enriched, out / f"{name}_enrichment_log.csv", wanted, rules=rules, pending=pending)
     after = check(enriched, rules)
     for tag, rep in (("before", before), ("after", after)):
         (out / f"{name}_{tag}.json").write_text(json.dumps(rep.to_json(), ensure_ascii=False), encoding="utf-8")
-    (out / f"{name}_report.html").write_text(render(after, rows, f"IFC+SG check after auto-fill: {name}"), encoding="utf-8")
+    (out / f"{name}_report.html").write_text(render(after, rows, f"IFC+SG check after auto-fill: {name}", pending), encoding="utf-8")
     gaps = Counter((f.ifc_class, f.message.split(" ")[3] if f.message.startswith("missing property set") else
                     f.message.split(" ")[0].split(".")[0]) for f in after.findings if f.origin == "mapping")
     s_before, s_after = before.summary(), after.summary()
@@ -43,6 +44,8 @@ def run(name, path, rules, out=OUT):
             "element_rule_pairs": s_before["element_rule_pairs"], "pass_before": s_before["pass_rate"],
             "pass_after": s_after["pass_rate"], "auto_filled": len(rows), "errors_before": s_before["errors"],
             "errors_after": s_after["errors"],
+            "unit_unverified_before": s_before["unit_unverified_pairs"],
+            "unit_unverified_after": s_after["unit_unverified_pairs"], "enrichment_deferred": len(pending),
             "model_level_findings": sorted({(f.rule, f.message) for f in after.findings if f.origin == "model"}),
             "top_remaining": gaps.most_common(8), "seconds": round(time.time() - t0, 1)}
 

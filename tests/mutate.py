@@ -98,7 +98,26 @@ MUTANTS = [('src/ifcsg_precheck/check.py', 'elif m.schema != "IFC4":', 'elif Fal
   'Counter(x.agency or "model" for x in f)'),
  ('src/ifcsg_precheck/enrich.py',
   'if isinstance(candidate, str) and candidate.strip():',
-  'if isinstance(candidate, str) and candidate:')]
+  'if isinstance(candidate, str) and candidate:'),
+ ('src/ifcsg_precheck/units.py', 'PREFIX[entity.Prefix] ** power', 'PREFIX[entity.Prefix]'),
+ ('src/ifcsg_precheck/units.py', '"GRAM": ("MASSUNIT", .001, 1)', '"GRAM": ("MASSUNIT", 1.0, 1)'),
+ ('src/ifcsg_precheck/units.py',
+  'if base.dimensions != DIMENSIONS[kind] or dims != DIMENSIONS[kind]:', 'if False:'),
+ ('src/ifcsg_precheck/units.py',
+  'source = None\n        if prop.Unit is not None:', 'source = None\n        if False:'),
+ ('src/ifcsg_precheck/units.py',
+  'elif measure in MEASURES:\n            source = project_unit(model, MEASURES[measure])',
+  'elif measure in MEASURES or measure in ("IfcReal", "IfcInteger"):\n            source = project_unit(model, MEASURES.get(measure, expected.kind))'),
+ ('src/ifcsg_precheck/units.py', 'factor = source.scale / expected.scale', 'factor = source.scale * expected.scale'),
+ ('src/ifcsg_precheck/units.py', 'if source.dimensions != expected.dimensions:', 'if False:'),
+ ('src/ifcsg_precheck/units.py', 'if natural and DIMENSIONS[natural] != source.dimensions:', 'if False:'),
+ ('src/ifcsg_precheck/enrich.py', 'm.create_entity("IfcLengthMeasure", value)', 'm.create_entity("IfcReal", value)'),
+ ('src/ifcsg_precheck/enrich.py', '"Unit": unit_entity', '"Unit": None'),
+ ('src/ifcsg_precheck/enrich.py', 'si_value = float(value) * .001', 'si_value = float(value)'),
+ ('src/ifcsg_precheck/enrich.py', 'if any(t is None or t.dimensions != LENGTH for t in targets):', 'if False:'),
+ ('src/ifcsg_precheck/check.py', 'if evidence["status"] == "unverified":', 'if False:'),
+ ('src/ifcsg_precheck/check.py', 'value = evidence["normalized_value"]', 'value = evidence["raw_value"]'),
+ ('src/ifcsg_precheck/enrich.py', 'conversion_factor=1 / write_unit.scale', 'conversion_factor=.001 / write_unit.scale')]
 
 class HarnessError(RuntimeError):
     """The run supplies no valid evidence about a mutant."""
