@@ -4,6 +4,18 @@ The [authored demonstration](../demos/report-review/index.html) uses three small
 
 The static report replay does not upload or process visitor IFC files. To review a real model, run the CLI locally with the mapping you are entitled to use. Reports and downloaded evidence may contain model identities; publish only inputs you own and intend to disclose.
 
+## 2026-10-12 release
+
+The [public authored review demo](https://luoaini1213.github.io/ifcsg-precheck/) is live. [Pages run 38215885718](https://github.com/LUOaini1213/ifcsg-precheck/actions/runs/38215885718) built and deployed [source `ac7ccf38ce619c80ba0b7bd7f26744a2d194fe83`](https://github.com/LUOaini1213/ifcsg-precheck/tree/ac7ccf38ce619c80ba0b7bd7f26744a2d194fe83), completing deployment at **07:06:43 UTC on 2026-10-12**. Its tree equals the independently checked [implementation `fd48ad5664be8903442a1b70db917a7059830999`](https://github.com/LUOaini1213/ifcsg-precheck/tree/fd48ad5664be8903442a1b70db917a7059830999).
+
+The fixed implementation's [PR check](https://github.com/LUOaini1213/ifcsg-precheck/actions/runs/38215169532) and [push check](https://github.com/LUOaini1213/ifcsg-precheck/actions/runs/38215165599) each passed **181 Python tests, 11 harness self-checks and 57/57 deliberate mutations with source-byte restoration**. Independent Pages builds also passed **4 JavaScript tests** and full demo reproduction with source/input/output hashes. The [fixed manifest](https://github.com/LUOaini1213/ifcsg-precheck/blob/fd48ad5664be8903442a1b70db917a7059830999/demos/report-review/manifest.json) identifies the actual public inputs and outputs.
+
+Release HTTP readback verified all **15 public files**, totalling **218,304 bytes**, byte-for-byte against that fixed implementation. The actual Pages tar contains those 15 regular authored files, with no source tree, private inputs or links. `.nojekyll` is a local staging file and is excluded by the official Pages artifact action's hidden-file policy; it is not counted as uploaded or live. This custom workflow deploys the checked static artifact directly, without a Jekyll build.
+
+Actual HTTPS browser acceptance completed at **07:27 UTC on 2026-10-12**. Navigation reached all three stages. `unit-unverified` showed **2 of 22** records (finding and unit evidence), while the raw evidence status remained `unverified`. Searching GlobalId `1gNND8DMLRnhwOonVDr7z8` plus `Thickness` showed the typed 0.25 m evidence and its actual write trace. Public download buttons produced a two-record filtered CSV and complete JSON with 22 records, nine writes and one deferred derivation; the files were parsed independently. The final georeference warning remained, with zero console errors or warnings. The 375px-wide browser layout was usable; this records layout and interaction observations, not physical-phone or cross-browser performance.
+
+The published replay retains the authored 3/18 → 12/18 → 18/18 property-check counts, nine writes, one deferred derivation and the final georeference warning. The original publication preparation below documents the release method; later documentation updates do not change the deployed artifact's source identity or the historical measurements.
+
 1. Open **Check input**: 3 of 18 property checks pass. Search a GlobalId or property, combine agency, severity and status, then locate that element in the authoring tool. The full finding table retains every finding, including those outside the top-50 priority snapshot.
 2. Open **Derive and recheck**: 9 traceable writes raise passing checks to 12 of 18. Inspect `S-derive`'s `Thickness`: the actual geometry is 0.25 m; its exported property is an `IfcLengthMeasure` of 0.25 with an explicit metre unit. `S-ready`'s existing 250 mm explicit override remains untouched. Source values, conversion factors and output values are in the fill trace.
 3. Inspect **deferred** and **unit-unverified** evidence for `S-deferred`. A blank property with an unknown explicit unit is not auto-filled; a generic `IfcReal` clearance with no explicit unit is not credited as a physical length. Neither is silently repaired or counted as passed.
@@ -30,7 +42,7 @@ The builder calls the real `check → enrich → check` implementation. It then 
 
 Historical official-corpus reports, hashes, raw models and published measurements are retained unchanged. The authored example's 3/18 → 12/18 → 18/18 counts describe only its six illustrative rules and three slabs; they do not replace the historical results.
 
-## Prepare publication
+## Publication preparation and release method
 
 The [Pages workflow](../.github/workflows/report-pages.yml) builds and checks the demo on PRs and pushes. It stages exactly the allowlisted public authored files and `.nojekyll`; it does not upload the repository root, official workbook/generated rules, private models, dependencies or credentials. Staging rejects a changed inventory, stale source/output fingerprints, links and nonempty output directories.
 
@@ -43,6 +55,6 @@ gh variable set IFCSG_PAGES_ENABLED --body true --repo LUOaini1213/ifcsg-prechec
 gh workflow run report-pages.yml --ref main -f publish=true --repo LUOaini1213/ifcsg-precheck
 ```
 
-If Pages is already configured, update its build type instead of creating it again. Build jobs receive read permission; only the gated main/manual deploy job receives `pages: write` and `id-token: write` in the `github-pages` environment. The planned URL is `https://luoaini1213.github.io/ifcsg-precheck/`. This branch prepares a reviewed artifact and does not itself enable Pages or publish a site. A successful build is not a deployment receipt.
+If Pages is already configured, update its build type instead of creating it again. Build jobs receive read permission; only the gated main/manual deploy job receives `pages: write` and `id-token: write` in the `github-pages` environment. The initial demo PR prepared the reviewed artifact before Pages was enabled; the completed release at `https://luoaini1213.github.io/ifcsg-precheck/` is recorded above. A successful build alone is not a deployment receipt.
 
 The workflow follows [GitHub's custom Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages), using `configure-pages@v5`, `upload-pages-artifact@v4` and `deploy-pages@v4`.
