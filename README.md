@@ -93,6 +93,11 @@ python scripts/evaluate.py --output-dir reports/my-review --rules rules/ifcsg_ma
   bridge=../bridge-bim/model/bridge_bim.ifc sample=samples/sample_block.ifc
 ```
 
+Use separate paths for source models, mapping/rule inputs, enriched models and reports.
+The CLI rejects overlapping inputs and outputs (including symbolic and hard links)
+before writing any output; enrichment logs and pending-review sidecars are checked too.
+Existing reports at independent paths can still be replaced normally.
+
 ## Tests
 
 `python -m pytest -q tests` checks real IFC type inheritance, spatial ancestry, shared property ownership, source-value types, idempotency, report counts, evaluation provenance and the original pipeline. Fixtures and hand-written rules keep this suite independent of BCA's file.
