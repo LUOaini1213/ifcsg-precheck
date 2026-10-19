@@ -29,7 +29,7 @@
   },
   "output_sha256": {
     "authored_rules.json": "c9cd201208f29636709aaf1d84bb708462e2bc66efdeb20bb3126fffb18db717",
-    "before.html": "307364668abd6dc95302a2dce9b3503dfc81c9e2a3b67e211ddc4e100fd7fbda",
+    "before.html": "7492a84fc997ce400e7b3a225efa9f0de0eed66b94b3d877a14a22d7d168c7c8",
     "before.ifc": "85f915a521548871a093a26fa9f20b415f698bcbbf6a256c58901ba470d292ce",
     "before.json": "f9c24aa13825baa468cd5dc1c224109d59a58ebb08ec40cb29a63dc546a00c47",
     "decisions.json": "d6455adf3e7c1d04c3b2201acf024eafb68c8f86c0539221554944f617ab89e8",
@@ -38,8 +38,8 @@
     "derived.ifc": "d0d244301630b2f2a0abf3019d1f9f1804bed98a44cc33750b59eba7dbfbfa0e",
     "derived.json": "197b3c4270ed714d7b8c7ddfc9fde9935df41327c70b6b20a4a5f9e5b649e060",
     "independent_reopen.json": "38d36c2f650e63fd4265ac9dec50a9c7dc191bb85574513a1f8eb748112bfc49",
-    "index.html": "4e29b2c52f12fa133d6ef6a6bf328aae10e58b2e8b7836e5d2b4ab9a0c672290",
-    "reviewed.html": "f3dc7b3f479acd8e544b567f11f7d4af7a61a87f27e0afdc5f683b10a8f4e722",
+    "index.html": "6fe4381d3ef213c134a0535ba53471c4d89d4c15861fb1b048b7f7a56adb4034",
+    "reviewed.html": "daa307d6d2250ac03f4027f918431972fd7f416d1c31ec78a0a53096a5de952d",
     "reviewed.ifc": "6925658e69432ef751621b0ee4d1f44e69f92dc7c0370315a5dbcb7451c40d60",
     "reviewed.json": "450f333b30a60265f4dcf5d96468ddc79d32f63d04823a64ad94072b873050cb"
   },
@@ -50,7 +50,7 @@
     "scripts/verify_report_demo.py": "d759ae721185daa0eead704971e3a34794930d2cd865b1877c11ff8615eaa24b",
     "src/ifcsg_precheck/__init__.py": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
     "src/ifcsg_precheck/check.py": "c05442f6d72e8bcd1c4e5fde3c627936bf12a2cb69d2cd3aff5bca10a3c1964e",
-    "src/ifcsg_precheck/cli.py": "9420f1be9c7b1fd02574590f1d966d5c4eea9f1886504b99b2ff9b2d3472c76e",
+    "src/ifcsg_precheck/cli.py": "8f00f6f7d28944f8da729184e94a5531448edf9ba099f72589a959a89c9a15d1",
     "src/ifcsg_precheck/enrich.py": "a90351b9f4011df7aae668d4d07376df2fea304556a471d202fb12800fc3a509",
     "src/ifcsg_precheck/mapping.py": "49ac3a2f02e16bb42f60e32585fd1ed4ed9bd282491f51d273ae55fde13ceae6",
     "src/ifcsg_precheck/report.py": "4cdb4ad4b71bb91d0a28ebd531fcb60acfd865b5bf082df07364fce19748e3dd",
