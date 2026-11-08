@@ -57,6 +57,10 @@ def main(argv=None):
         print("written", build(a.out))
     else:
         rule_paths = a.rules if a.rules is not None else sorted(RULES_DIR.glob("*.json"))
+        if not rule_paths:
+            # Without rules, check/enrich would report only model-level findings and look nearly clean.
+            ap.error(f"no rule files found in {RULES_DIR}: run `python -m ifcsg_precheck.cli rules <mapping.xlsx>` "
+                     "first, or pass --rules (for a workbook-free trial: --rules demos/report-review/authored_rules.json)")
         if a.cmd == "check":
             outputs = [a.json, a.html]
         else:
@@ -64,8 +68,13 @@ def main(argv=None):
             outputs = [a.out, log, log + ".pending.json", a.html]
         _validate_output_paths(ap, [a.ifc, *rule_paths], outputs)
         rules = load_rules(rule_paths)
+        if not rules:
+            ap.error("the selected rule files contain no rules")
         if getattr(a, "agency", None):
+            agencies = sorted({str(x["agency"]) for x in rules})
             rules = [x for x in rules if x["agency"] in (a.agency, "All")]
+            if not rules:
+                ap.error(f"no rules for agency {a.agency!r}; agencies in the rule files: {', '.join(agencies)}")
         if a.cmd == "check":
             rep = check(a.ifc, rules)
             print(json.dumps(rep.summary(), indent=1, default=float))

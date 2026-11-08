@@ -1,16 +1,15 @@
 # ifcsg-precheck
 
-[Open the live authored IFC review demo](https://luoaini1213.github.io/ifcsg-precheck/) · [2026-10-12 release receipt](docs/REPORT_REVIEW.md#2026-10-12-release)
+[![tests](https://github.com/LUOaini1213/ifcsg-precheck/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/LUOaini1213/ifcsg-precheck/actions/workflows/ci.yml) [![report-pages](https://github.com/LUOaini1213/ifcsg-precheck/actions/workflows/report-pages.yml/badge.svg?branch=main)](https://github.com/LUOaini1213/ifcsg-precheck/actions/workflows/report-pages.yml)
 
-This tool checks an IFC model against Singapore's IFC+SG requirements for CORENET X **before** submission. It fills in the properties that can be derived from data already in the model, and writes a report of what is still missing, grouped by agency and element.
+A Python/ifcopenshell tool that checks an IFC model against Singapore's IFC+SG requirements for CORENET X **before** submission, fills in properties that can be derived from data already in the model (each fill logged with its source), and reports what is still missing by agency and element.
 
-The rules are generated from BCA's IFC+SG Industry Mapping (4 Dec 2025, 833 rows), which yields 1,456 rules; a rule is one combination of entity, sub type, property set, property and agency.
+- **Rules:** generated locally from BCA's IFC+SG Industry Mapping (4 Dec 2025): 833 rows expand to 1,456 rules (entity × sub type × property set × property × agency). The workbook and the generated rules are not redistributed.
+- **Result:** on two independently built public models, auto-fill raised the share of passing element-rule checks from 0% to **13.0%** (facade-bim, 27 of 208) and **17.8%** (bridge-bim, 4,848 of 27,249) in the 2026-10-12 unit-aware run. Measured on their principal axes, the 120 bridge T-girders come out 2,000–2,001 mm deep (design 2.00 m); the world vertical extent would give 2,015–2,553 mm.
+- **Limits:** presence, type, format and unit checks only, not code compliance; georeferencing is a presence check; the bridge is IFC 4.3 infrastructure checked under a building profile. A passing rate is not submission readiness.
+- **Try it without the BCA workbook:** open the [live authored review demo](https://luoaini1213.github.io/ifcsg-precheck/), or run `python -m ifcsg_precheck.cli check samples/sample_block.ifc --rules demos/report-review/authored_rules.json --html out.html` (six illustrative rules, no official mapping data; see [Use](#use)).
 
-The historical measurements on two independently built models raised the share of passing element-rule checks from 0% to 13.0% and 17.8%. The derived beam and slab sizes match the design values. A separate [unit-semantics review](reports/review-20261012-units/README.md) records the current checker and typed IFC writes; the historical reports remain unchanged.
-
-[docs/WORKFLOW.md](docs/WORKFLOW.md) shows where this fits in the gateway process (as-is vs to-be) and how it could be rolled out.
-
-Try the [self-authored review demonstration](demos/report-review/index.html): inspect all findings and typed unit evidence, filter by review group/severity/GlobalId/property/status, and download complete JSON or the filtered CSV. Its three small IFCs show **check → derive → recheck → authored review**, with independently reopened typed writes. The [review guide](docs/REPORT_REVIEW.md) explains reproduction and static publication. This example contains no official mapping rows; its illustrative groups and scripted decisions do not claim regulatory approval or independent human annotation.
+[docs/WORKFLOW.md](docs/WORKFLOW.md) shows where this fits in the gateway process (as-is vs to-be) and how it could be rolled out. The [self-authored review demonstration](demos/report-review/index.html) shows **check → derive → recheck → authored review** on three small IFCs, with typed unit evidence, filters and JSON/CSV downloads; the [review guide](docs/REPORT_REVIEW.md) explains reproduction, static publication and the [2026-10-12 release receipt](docs/REPORT_REVIEW.md#2026-10-12-release). That example contains no official mapping rows; its illustrative groups and scripted decisions do not claim regulatory approval or independent human annotation.
 
 ## What it checks
 
@@ -43,17 +42,17 @@ Geometry is interpreted in SI metres only after its project length unit is verif
 
 ## Results
 
-The 2026-10-03 recheck is in [reports/review-20261003/summary.json](reports/review-20261003/summary.json), with model, rule and source hashes plus dependency versions in [provenance.json](reports/review-20261003/provenance.json). These and the [original measurement](reports/summary.json) remain unchanged. The new unit-aware evaluation is published separately in [reports/review-20261012-units](reports/review-20261012-units/README.md). Reproduce into a fresh output directory using the command below.
+The current measurement is the 2026-10-12 unit-aware run in [reports/review-20261012-units](reports/review-20261012-units/README.md) (checker commit `79ae5f9`; model, rule and source hashes plus dependency versions in its [provenance.json](reports/review-20261012-units/provenance.json)). Later code changes (PR #4 and the 2026-11-03 review fixes) touch only the command line's path and rule-presence guards, not the checks or derivations. A check is one applicable element × rule pair; it passes when the property is present with the expected type, value and verified unit.
 
-For a comparable rerun, match the recorded model/rule hashes and dependency versions rather than assuming today's minimum-version installation is identical. Source hashes record raw workspace bytes, including Windows line endings; elapsed times are environment-specific measurements, not a controlled speed comparison.
+| Model (commit) | Elements | Element-rule checks | Pass before | Values filled | Pass after |
+|---|---:|---:|---:|---:|---:|
+| [facade-bim](https://github.com/LUOaini1213/facade-bim/tree/3c88e925a67d443ef879dce15b9e1ee837354375) `3c88e925` (IFC4, unitized curtain wall) | 8,323 | 208 | 0 / 208 (0%) | 18 | 27 / 208 (13.0%) |
+| [bridge-bim](https://github.com/LUOaini1213/bridge-bim/tree/b6456b344b09a92620cc5d4a4cfb2a3be963b147) `b6456b34` (IFC 4.3, 12-span T-girder bridge) | 1,470 | 27,249 | 0 / 27,249 (0%) | 4,848 | 4,848 / 27,249 (17.8%) |
+| `samples/sample_block.ifc` (generated, defects planted) | 10 | 191 | 7 / 191 (3.7%) | 1 | 8 / 191 (4.2%) |
 
-| Model | Elements | Element-rule checks | Pass before | Values filled | Pass after |
-|---|---|---|---|---|---|
-| [facade-bim](https://github.com/LUOaini1213/facade-bim) (IFC4, unitized curtain wall) | 859 | 208 | 0% | 18 | 13.0% |
-| [bridge-bim](https://github.com/LUOaini1213/bridge-bim) (IFC 4.3, 12-span T-girder bridge) | 1,470 | 27,249 | 0% | 5,136 | 17.8% |
-| `samples/sample_block.ifc` (generated, defects planted) | 10 | 191 | 9.9% | 1 | 10.5% |
+`tests/test_readme_numbers.py` pins every cell of this table, and of the history table below, to the cited `summary.json`. The sample's lower rate than in earlier runs comes from 12 `IfcReal` length values without an explicit unit, which the unit-aware checker no longer counts as verified; the sample file itself is unchanged.
 
-- **Original validation of the derived sizes.** On all 120 T-girders of bridge-bim, depth came out at 2,000–2,001 mm and width at 1,850 mm; the design section is 2.00 m × 1.85 m. Taking the vertical extent along the world axis instead gave 2,015–2,553 mm, because the girders sit on a grade with superelevation. The facade-bim slabs came out at 250 mm, as set in that model's export script. The current fill logs reproduce the derived dimensions; this recheck does not repeat the independent design/world-axis comparison.
+- **Derived sizes match the design.** On all 120 T-girders of bridge-bim `b6456b34`, the principal-axis measurement used by the enrichment gives a depth of 2,000–2,001 mm and a width of 1,850 mm; the design section is 2.00 m × 1.85 m. The vertical extent along the world axis is 2,015–2,553 mm, because the girders sit on a grade with superelevation. These figures are in [girder_axes.json](reports/girder-axes-20261108/girder_axes.json), produced by `scripts/girder_axes.py` (re-measured 2026-11-08 on the pinned model, SHA-256 recorded; the original 2026-09-27 comparison kept no artifact or model hash). The mechanism is pinned by a pitched-beam regression test in `tests/test_precheck.py`. The nine facade-bim slab `Thickness` fills are all 250 mm (unit evidence in the facade report).
 - **Remaining property gaps need review.** For bridge-bim, the largest remaining gaps are `SGPset_BeamReinforcement`, `SGPset_Beam` and `SGPset_SteelConnection`. For facade-bim, they are `SGPset_Slab` and `SGPset_SlabReinforcement`. These properties are missing from the required locations and are not filled by the supported derivations; a designer must establish the values or locate another reliable source.
 - **The planted defects are all found.** In the sample model:
   - D-02 has FireRating "1 hr", while the mapping's values are "0.5"…"4" with the unit held separately;
@@ -62,16 +61,32 @@ For a comparable rerun, match the recorded model/rule hashes and dependency vers
   - W-X is not contained in a storey;
   - there is no georeference.
 - **Why both real models start at 0%.** Neither was authored for CORENET X, and bridge-bim is infrastructure (IFC 4.3, no IfcBuilding), so the checker flags its schema and spatial structure as well. They are used because they are real, independently built models, not models written to pass.
-- **Passing property checks is not overall model compliance.** The 2026-10-03 recheck retained the original property pass rates and fill counts. Correct storey ancestry additionally flagged 4 facade members and all 1,470 bridge elements under this building profile; this does not establish a defect in the bridge's structural design. Model-level findings are counted separately from the element-rule pass rate. The bridge is a cross-domain example, not evidence that the profile is valid for infrastructure or that the model is submission-ready. The separate unit-aware review reports its actual results and exclusions.
+- **Passing property checks is not overall model compliance.** Storey ancestry, added in the 2026-10-03 recheck, flags 4 facade members and all 1,470 bridge elements under this building profile; this does not establish a defect in the bridge's structural design. Model-level findings are counted separately from the element-rule pass rate. The bridge is a cross-domain example, not evidence that the profile is valid for infrastructure or that the model is submission-ready.
 - **Report counts are findings.** A component can fail several property rules, so a gap count can exceed the number of elements. Repeated model-level findings are grouped, with every GlobalId available in an expandable detail table. Custom rule identifiers are classified by their recorded origin rather than requiring a `CX` prefix.
 
-Open a current example: [facade report](reports/review-20261003/facade_report.html), [bridge report](reports/review-20261003/bridge_report.html), or [sample report](reports/review-20261003/sample_report.html).
+Open the current reports: [facade](reports/review-20261012-units/facade_report.html), [bridge](reports/review-20261012-units/bridge_report.html), [sample](reports/review-20261012-units/sample_report.html).
+
+### History
+
+Earlier runs are kept unchanged. The 2026-10-03 model hashes in its provenance differ from the pinned commits above, and the original run recorded no hashes, so neither is a before/after comparison with the current table. Source hashes record raw workspace bytes, including Windows line endings; elapsed times are local measurements, not a speed comparison.
+
+| Run | Checker | facade-bim: elements, checks, filled, pass after | bridge-bim: elements, checks, filled, pass after | sample: pass before → after |
+|---|---|---|---|---|
+| [Original](reports/summary.json), 2026-09-27 | `edc69b2` | 859, 208, 18, 13.0% | 1,470, 27,249, 5,136, 17.8% | 9.9% → 10.5% |
+| [Recheck](reports/review-20261003/summary.json), 2026-10-03 ([provenance](reports/review-20261003/provenance.json)) | `b06227f` | 859, 208, 18, 13.0% | 1,470, 27,249, 5,136, 17.8% | 9.9% → 10.5% |
+
+The 2026-10-03 recheck kept the original property pass rates and fill counts and added the storey-ancestry findings. The 2026-10-12 bridge fill count (4,848 vs 5,136) also uses a newer model file and must not be attributed solely to unit handling.
 
 ## Use
+
+Python 3.11 (the version CI and the recorded runs use). The commands use Git Bash/Linux syntax; in PowerShell set `$env:PYTHONPATH = "src"` instead of `export`.
 
 ```bash
 pip install -r requirements.txt
 export PYTHONPATH=src
+
+# Try it without the BCA workbook: six illustrative rules on the planted-defect sample
+python -m ifcsg_precheck.cli check samples/sample_block.ifc --rules demos/report-review/authored_rules.json --html out.html
 
 # 1. Download BCA's Industry Mapping xlsx from info.corenet.gov.sg (IFC+SG > Templates, Apps and More > IFC-SG Excel Mapping File)
 python -m ifcsg_precheck.cli rules industry-mapping.xlsx          # writes rules/ifcsg_mapping.json
@@ -86,11 +101,26 @@ python -m ifcsg_precheck.cli enrich model.ifc model_enriched.ifc --html after.ht
 
 # Demonstration model with planted defects
 python -m ifcsg_precheck.cli sample samples/sample_block.ifc
+```
 
-# Preserve previous measurements, and record exact input/source fingerprints
+`check` and `enrich` exit with status 2 if no rule file is found (`rules/` is empty until step 1), if the rule files are empty, or if `--agency` matches no rule, instead of reporting a near-clean model with zero rules applied.
+
+To reproduce the measurements, clone the two public models next to this repository at the pinned commits (their `.gitattributes` keep the IFC bytes identical on Windows and Linux), then match the recorded hashes and dependency versions:
+
+```bash
+git clone https://github.com/LUOaini1213/facade-bim ../facade-bim
+git -C ../facade-bim checkout 3c88e925a67d443ef879dce15b9e1ee837354375
+git clone https://github.com/LUOaini1213/bridge-bim ../bridge-bim
+git -C ../bridge-bim checkout b6456b344b09a92620cc5d4a4cfb2a3be963b147
+
+# Needs rules/ifcsg_mapping.json from step 1; writes into a fresh directory
 python scripts/evaluate.py --output-dir reports/my-review --rules rules/ifcsg_mapping.json \
   facade=../facade-bim/model/facade_bim.ifc \
   bridge=../bridge-bim/model/bridge_bim.ifc sample=samples/sample_block.ifc
+
+# No workbook needed: principal-axis vs world-axis girder depth, compared with the committed file
+python scripts/girder_axes.py ../bridge-bim/model/bridge_bim.ifc \
+  --out reports/girder-axes-20261108/girder_axes.json --check
 ```
 
 Use separate paths for source models, mapping/rule inputs, enriched models and reports.
@@ -100,11 +130,17 @@ Existing reports at independent paths can still be replaced normally.
 
 ## Tests
 
-`python -m pytest -q tests` checks real IFC type inheritance, spatial ancestry, shared property ownership, source-value types, idempotency, report counts, evaluation provenance and the original pipeline. Fixtures and hand-written rules keep this suite independent of BCA's file.
+```bash
+pip install -r requirements-ci.txt
+python -m pytest -q tests
+PYTHONPATH=src python scripts/report_demo.py --check
+python tests/mutate.py --self-test
+python tests/mutate.py
+```
 
-The 2026-10-03 local gate passed **122 tests**, the harness's **11 self-checks**, and **40/40 deliberate mutations**. The ownership regression also verifies that, after filling an instance's Mark, later changes to an unrelated inherited type property still reach that instance. GitHub Actions runs the full test and mutation gates on each push and PR.
+The pytest suite checks real IFC type inheritance, spatial ancestry, shared property ownership, source-value types, units, idempotency, report counts, evaluation provenance, CLI path and rule guards, the README's result numbers and the original pipeline. Fixtures and hand-written rules keep it independent of BCA's file. On Windows without symlink privilege, the symlink-alias cases are skipped. `report_demo.py --check` regenerates the authored demo and compares every byte and fingerprint.
 
-The 2026-10-12 unit-semantics offline gate passed **175 tests**, **11 harness self-checks**, and **55/55 mutations** (the original 40 plus 15 unit/trace defects). Its separate report records the exact new inputs and exported-file verification; no historical measurement was overwritten.
+[GitHub Actions](https://github.com/LUOaini1213/ifcsg-precheck/actions/workflows/ci.yml) runs the full pytest suite, the demo check, the mutation harness self-test and every deliberate mutation in `tests/mutate.py` on each push and PR (Ubuntu), plus pytest and the demo check on Windows. Counts recorded at each dated review stay in that review's own record ([2026-10-12 units](reports/review-20261012-units/README.md), [2026-10-12 release](docs/REPORT_REVIEW.md#2026-10-12-release)); the latest run log has the current counts.
 
 `python tests/mutate.py` plants deliberate bugs in the checker, enrichment, mapping converter, report and command line. It first verifies the unmodified suite and each replacement's unique anchor and syntax. Only an actual pytest test failure counts as detection: collection/setup errors, crashes, timeouts and missing reports stop the run. Source bytes are restored even after failures, and each test process uses isolated bytecode. `python tests/mutate.py --self-test` checks the harness's failure and restoration paths. Run mutation checks exclusively: do not edit, import, test or serve the same source checkout concurrently.
 
