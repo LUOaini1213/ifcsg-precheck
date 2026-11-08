@@ -10,6 +10,25 @@ jobs:
           python-version: "3.11"
       - run: pip install -r requirements-ci.txt
       - run: python -m pytest -q tests
+      - name: Reproduce the authored demo byte for byte
+        run: PYTHONPATH=src python scripts/report_demo.py --check
       - name: Verify mutation error handling and source restoration
         run: python tests/mutate.py --self-test
       - run: python tests/mutate.py
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements-ci.txt
+      - run: python -m pytest -q tests
+      - name: Reproduce the authored demo byte for byte
+        shell: bash
+        run: PYTHONPATH=src python scripts/report_demo.py --check
+      - name: README workbook-free trial command
+        shell: bash
+        run: |
+          PYTHONPATH=src python -m ifcsg_precheck.cli check samples/sample_block.ifc --rules demos/report-review/authored_rules.json --html out.html
+          test -s out.html

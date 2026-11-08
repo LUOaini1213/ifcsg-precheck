@@ -1,0 +1,29 @@
+{
+ "model": {
+  "file": "bridge_bim.ifc",
+  "sha256": "139931fd19950fad2c879d74f5859b78272bdeb6f1dce9903e5ec533872fabf2",
+  "source": "https://github.com/LUOaini1213/bridge-bim/blob/b6456b344b09a92620cc5d4a4cfb2a3be963b147/model/bridge_bim.ifc"
+ },
+ "selection": "IfcBeam with PredefinedType T_BEAM",
+ "girders": 120,
+ "measured": 120,
+ "skipped_no_geometry": 0,
+ "principal_axis_depth_mm": {
+  "min": 2000,
+  "max": 2001
+ },
+ "principal_axis_width_mm": {
+  "min": 1850,
+  "max": 1850
+ },
+ "world_vertical_extent_mm": {
+  "min": 2015,
+  "max": 2553
+ },
+ "rounding": "nearest millimetre, as in enrich()",
+ "environment": {
+  "ifcopenshell": "0.8.5",
+  "numpy": "2.4.6",
+  "python": "3.11"
+ }
+}
